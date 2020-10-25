@@ -12,14 +12,17 @@ ENV PGID=0
 COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
-
-RUN mkdir /config
-RUN chmod -R 777 /start.sh /config
+RUN apk add --no-cache libmediainfo icu-libs libintl sqlite-libs
+RUN apk add --no-cache --virtual=.build-dependencies ca-certificates curl
+RUN mkdir -p /opt/radarr /config
+RUN curl -o - -L "${radarr_url}" | tar xz -C /opt/radarr --strip-components=1
+RUN apk del .build-dependencies
+RUN chmod -R 777 /opt/radarr /start.sh
 
 RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
 
 # ports and volumes
-EXPOSE 0
+EXPOSE 7878
 VOLUME /config
 
 CMD ["/start.sh"]
