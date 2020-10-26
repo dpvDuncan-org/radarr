@@ -4,6 +4,9 @@ FROM multiarch/qemu-user-static as qemu
 
 FROM ${BASE_IMAGE_PREFIX}alpine
 
+ARG radarr_url
+ARG RADARR_RELEASE
+
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 
 ENV PUID=0
