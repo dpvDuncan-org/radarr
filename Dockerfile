@@ -9,7 +9,7 @@ ARG RADARR_RELEASE
 
 ENV PUID=0
 ENV PGID=0
-ENV LIDARR_RELEASE=${LIDARR_RELEASE}
+ENV RADARR_RELEASE=${RADARR_RELEASE}
 
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
