@@ -16,12 +16,10 @@ COPY scripts/start.sh /
 
 RUN apk -U --no-cache upgrade
 
-
-RUN apk add --no-cache libmediainfo icu-libs libintl sqlite-libs
-RUN apk add --no-cache --virtual=.build-dependencies ca-certificates curl
+RUN apk add --no-cache libmediainfo icu-libs libintl sqlite-libs ca-certificates curl
 RUN mkdir -p /opt/radarr /config
 RUN curl -o - -L "${radarr_url}" | tar xz -C /opt/radarr --strip-components=1
-RUN apk del .build-dependencies
+RUN apk del curl
 RUN chmod -R 777 /opt/radarr /start.sh
 
 RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
